@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 
 export class BaseService<T, ID> {
 
@@ -17,7 +18,7 @@ export class BaseService<T, ID> {
               protected options?: { headers: HttpHeaders }
   ) {
     this.http = injector.get(HttpClient);
-    this.base = 'http://localhost:3000' + baseUrl;
+    this.base = environment.baseUrl + baseUrl;
 
     if (!options) {
       this.httpOptions = {
@@ -29,9 +30,6 @@ export class BaseService<T, ID> {
   }
 
   get(complementUrl?: string): Observable<T> {
-    // if (this.loaderService) {
-    //   this.loaderService.show();
-    // }
     return this.http.get<T>(this.base + this.getComplementUrl(complementUrl), this.httpOptions)
       .pipe(
         retry(1),

@@ -9,7 +9,7 @@ import { Product } from './../model/product';
 export class ProductService extends BaseService<Product, number> {
 
   constructor(public injector: Injector) {
-    super(injector, '/products');
+    super(injector, '/product');
   }
 
   public getAllProducts(): Observable<Product[]> {
